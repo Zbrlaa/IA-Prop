@@ -1,6 +1,10 @@
 package fr.univtln.spelerin;
 
-import fr.univtln.spelerin.connecteurs.*;
+import fr.univtln.spelerin.connecteurs.Not;
+import fr.univtln.spelerin.connecteurs.And;
+import fr.univtln.spelerin.connecteurs.Or;
+import fr.univtln.spelerin.connecteurs.Impl;
+import fr.univtln.spelerin.connecteurs.Equi;
 
 
 /**

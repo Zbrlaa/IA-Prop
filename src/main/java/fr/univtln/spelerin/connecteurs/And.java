@@ -18,6 +18,6 @@ public class And implements Formule{
 
 	@Override
 	public String toString(){
-		return "(" + pre.toString() + " -> " + post.toString() + ")";
+		return "(" + pre.toString() + " & " + post.toString() + ")";
 	}
 }
