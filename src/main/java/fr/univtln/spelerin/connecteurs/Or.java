@@ -1,23 +1,23 @@
 package fr.univtln.spelerin.connecteurs;
 
 import fr.univtln.spelerin.Formule;
+import fr.univtln.spelerin.VarSet;
+import lombok.Getter;
 
 
-public class Or implements Formule{
-	Formule pre;
-	Formule post;
-
-	public Or(Formule pre, Formule post){
-		this.pre = pre;
-		this.post = post;
+@Getter
+public class Or extends Formule{
+	private Or(Formule pre, Formule post, VarSet varset){
+		super(pre, post, varset);
 	}
 	
 	public static Formule or(Formule pre, Formule post){
-		return new Or(pre, post);
+		VarSet varset = pre.getVarset().union(post.getVarset());
+		return new Or(pre, post, varset);
 	}
 
 	@Override
 	public String toString(){
-		return "(" + pre.toString() + " | " + post.toString() + ")";
+		return "(" + pre + " | " + post + ")";
 	}
 }

@@ -1,21 +1,23 @@
 package fr.univtln.spelerin.connecteurs;
 
 import fr.univtln.spelerin.Formule;
+import fr.univtln.spelerin.VarSet;
+import lombok.Getter;
 
 
-public class Not implements Formule{
-	Formule post;
-
-	public Not(Formule post){
-		this.post = post;
+@Getter
+public class Not extends Formule{
+	private Not(Formule post, VarSet varset){
+		super(null, post, varset);
 	}
 	
 	public static Formule not(Formule post){
-		return new Not(post);
+		VarSet varset = post.getVarset();
+		return new Not(post, varset);
 	}
 
 	@Override
 	public String toString(){
-		return "!" + post.toString();
+		return "!" + post;
 	}
 }

@@ -1,20 +1,27 @@
 package fr.univtln.spelerin;
+import java.util.Set;
+
+import lombok.Getter;
 
 
-public class Var implements Formule{
+@Getter
+public class Var extends Formule{
 	//Je mets String et pas char pour pouvoir mettre une annotation genre a1
-	private String valeur;
+	private String name;
 
-	public Var(String valeur){
-		this.valeur = valeur;
+	private Var(String name, VarSet varset){
+		super();
+		this.name = name;
+		this.varset = varset;
 	}
 
-	public static Formule var(String valeur){
-		return new Var(valeur);
+	public static Formule var(String name){
+		VarSet varset = new VarSet(Set.of(name));
+		return new Var(name, varset);
 	}
 
 	@Override
 	public String toString() {
-		return valeur;
+		return name;
 	}
 }

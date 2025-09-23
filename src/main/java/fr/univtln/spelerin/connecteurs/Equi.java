@@ -1,23 +1,23 @@
 package fr.univtln.spelerin.connecteurs;
 
 import fr.univtln.spelerin.Formule;
+import fr.univtln.spelerin.VarSet;
+import lombok.Getter;
 
 
-public class Equi implements Formule{
-	Formule pre;
-	Formule post;
-
-	public Equi(Formule pre, Formule post){
-		this.pre = pre;
-		this.post = post;
+@Getter
+public class Equi extends Formule{
+	private Equi(Formule pre, Formule post, VarSet varset){
+		super(pre, post, varset);
 	}
 	
 	public static Formule equi(Formule pre, Formule post){
-		return new Equi(pre, post);
+		VarSet varset = pre.getVarset().union(post.getVarset());
+		return new Equi(pre, post, varset);
 	}
 
 	@Override
 	public String toString(){
-		return "(" + pre.toString() + " <-> " + post.toString() + ")";
+		return "(" + pre + " <-> " + post + ")";
 	}
 }

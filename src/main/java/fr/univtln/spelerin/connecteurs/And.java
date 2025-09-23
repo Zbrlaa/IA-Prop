@@ -1,23 +1,23 @@
 package fr.univtln.spelerin.connecteurs;
 
 import fr.univtln.spelerin.Formule;
+import fr.univtln.spelerin.VarSet;
+import lombok.Getter;
 
 
-public class And implements Formule{
-	Formule pre;
-	Formule post;
-
-	public And(Formule pre, Formule post){
-		this.pre = pre;
-		this.post = post;
+@Getter
+public class And extends Formule{
+	private And(Formule pre, Formule post, VarSet varset){
+		super(pre, post, varset);
 	}
-	
+
 	public static Formule and(Formule pre, Formule post){
-		return new And(pre, post);
+		VarSet varset = pre.getVarset().union(post.getVarset());
+		return new And(pre, post, varset);
 	}
 
 	@Override
 	public String toString(){
-		return "(" + pre.toString() + " & " + post.toString() + ")";
+		return "(" + pre + " & " + post + ")";
 	}
 }

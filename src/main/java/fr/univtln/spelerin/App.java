@@ -14,5 +14,6 @@ public class App {
 	public static void main(String[] args) {
 		Formule f = Equi.equi(And.and(Or.or(Not.not(Var.var("a")), Var.var("b")), Impl.impl(Var.var("c"), Var.var("d"))), Or.or(Var.var("a"), Var.var("d")));
 		System.out.println("F: " + f);
+		System.out.println("Vars: " + f.getVarset());
 	}
 }
