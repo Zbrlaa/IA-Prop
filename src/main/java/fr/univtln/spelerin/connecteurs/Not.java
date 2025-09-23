@@ -1,6 +1,7 @@
 package fr.univtln.spelerin.connecteurs;
 
 import fr.univtln.spelerin.Formule;
+import fr.univtln.spelerin.Interpretation;
 import fr.univtln.spelerin.VarSet;
 import lombok.Getter;
 
@@ -19,5 +20,9 @@ public class Not extends Formule{
 	@Override
 	public String toString(){
 		return "!" + post;
+	}
+
+	public boolean value(Interpretation i){
+		return !post.value(i);
 	}
 }

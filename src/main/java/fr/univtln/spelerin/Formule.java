@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Formule{
-    protected Formule pre;
+public abstract class Formule{
+	protected Formule pre;
 	protected Formule post;
-    protected VarSet varset;
+	protected VarSet varset;
 
-    //public boolean value(Interpretation i);
+	public abstract boolean value(Interpretation i);
 }

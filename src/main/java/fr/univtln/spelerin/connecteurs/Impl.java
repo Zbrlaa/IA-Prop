@@ -1,6 +1,7 @@
 package fr.univtln.spelerin.connecteurs;
 
 import fr.univtln.spelerin.Formule;
+import fr.univtln.spelerin.Interpretation;
 import fr.univtln.spelerin.VarSet;
 import lombok.Getter;
 
@@ -19,5 +20,11 @@ public class Impl extends Formule{
 	@Override
 	public String toString(){
 		return "(" + pre + " -> " + post + ")";
+	}
+
+	public boolean value(Interpretation i){
+		//a -> b <=> !a v b
+		boolean value = !pre.value(i) || post.value(i);
+		return value;
 	}
 }
