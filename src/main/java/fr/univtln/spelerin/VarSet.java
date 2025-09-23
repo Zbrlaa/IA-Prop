@@ -1,8 +1,10 @@
 package fr.univtln.spelerin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +23,24 @@ public class VarSet{
 	@Override
 	public String toString() {
 		return vars.toString();
+	}
+
+	
+	public List<Interpretation> getInterpretations(){
+		List<String> varList = new ArrayList<>(vars);
+		int size = varList.size();
+		int nb = 1 << size;
+
+		List<Interpretation> interpretations = new ArrayList<>();
+		for(int i=0; i<nb; i++){
+			Map<String, Boolean> map = new HashMap<>();
+			for(int j=0; j<size; j++){
+				int b = i>>j&1;
+				map.put(varList.get(j), b==1);
+			}
+			interpretations.add(new Interpretation(map));
+		}
+
+		return interpretations;
 	}
 }

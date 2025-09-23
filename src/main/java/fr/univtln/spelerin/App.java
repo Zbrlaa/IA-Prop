@@ -22,5 +22,7 @@ public class App {
 		Interpretation i = new Interpretation(Map.of("a", true, "b", false, "c", true, "d", false));
 		System.out.println("I: " + i);
 		System.out.println("F(I): " + f.value(i));
+
+		System.out.println(f.getVarset().getInterpretations());
 	}
 }
