@@ -7,13 +7,8 @@ import lombok.val;
 
 @Getter
 public class Var extends Formule{
-	//Je mets String et pas char pour pouvoir mettre une annotation genre a1
-	private String name;
-
 	private Var(String name, VarSet varset){
-		super();
-		this.name = name;
-		this.varset = varset;
+		super(name, null, null, varset);
 	}
 
 	public static Formule var(String name){
@@ -29,5 +24,10 @@ public class Var extends Formule{
 	public boolean value(Interpretation i){
 		boolean value = i.getValues().get(name);
 		return value;
+	}
+
+	@Override
+	public Formule toNormalForm() {
+		return this;
 	}
 }

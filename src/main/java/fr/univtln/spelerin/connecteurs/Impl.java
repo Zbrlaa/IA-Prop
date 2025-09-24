@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class Impl extends Formule{
 	private Impl(Formule pre, Formule post, VarSet varset){
-		super(pre, post, varset);
+		super("impl", pre, post, varset);
 	}
 	
 	public static Formule impl(Formule pre, Formule post){
@@ -26,5 +26,10 @@ public class Impl extends Formule{
 		//a -> b <=> !a v b
 		boolean value = !pre.value(i) || post.value(i);
 		return value;
+	}
+
+	@Override
+	public Formule toNormalForm(){
+		return Or.or(Not.not(pre), post).toNormalForm();
 	}
 }

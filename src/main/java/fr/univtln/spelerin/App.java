@@ -23,6 +23,14 @@ public class App {
 		System.out.println("I: " + i);
 		System.out.println("F(I): " + f.value(i));
 
-		System.out.println(f.getVarset().getInterpretations());
+		System.out.println("All F(I): " + f.values());
+		
+		System.out.println(f.toNormalForm());
+
+		// Formule f2 = Not.not(Or.or(Var.var("a"),Var.var("b")));
+		// System.out.println(f2.toNormalForm());
+
+		// Formule f3 = (Not.not(Not.not(Var.var("a"))));
+		// System.out.println(f3.toNormalForm());
 	}
 }

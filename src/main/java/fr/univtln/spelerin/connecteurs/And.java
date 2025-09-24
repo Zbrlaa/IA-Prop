@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class And extends Formule{
 	private And(Formule pre, Formule post, VarSet varset){
-		super(pre, post, varset);
+		super("and", pre, post, varset);
 	}
 
 	public static Formule and(Formule pre, Formule post){
@@ -25,5 +25,10 @@ public class And extends Formule{
 	public boolean value(Interpretation i){
 		boolean value = pre.value(i) && post.value(i);
 		return value;
+	}
+
+	@Override
+	public Formule toNormalForm(){
+		return and(pre.toNormalForm(), post.toNormalForm());
 	}
 }

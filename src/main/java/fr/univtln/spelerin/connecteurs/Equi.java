@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class Equi extends Formule{
 	private Equi(Formule pre, Formule post, VarSet varset){
-		super(pre, post, varset);
+		super("equi", pre, post, varset);
 	}
 	
 	public static Formule equi(Formule pre, Formule post){
@@ -25,5 +25,12 @@ public class Equi extends Formule{
 	public boolean value(Interpretation i){
 		boolean value = pre.value(i) == post.value(i);
 		return value;
+	}
+
+	@Override
+	public Formule toNormalForm(){
+		Formule preNF = pre.toNormalForm();
+		Formule postNF = post.toNormalForm();
+		return And.and(Or.or(Not.not(preNF), postNF), Or.or(Not.not(postNF), preNF)).toNormalForm();
 	}
 }

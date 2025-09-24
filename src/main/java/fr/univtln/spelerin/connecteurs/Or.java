@@ -9,7 +9,7 @@ import lombok.Getter;
 @Getter
 public class Or extends Formule{
 	private Or(Formule pre, Formule post, VarSet varset){
-		super(pre, post, varset);
+		super("or", pre, post, varset);
 	}
 	
 	public static Formule or(Formule pre, Formule post){
@@ -25,5 +25,10 @@ public class Or extends Formule{
 	public boolean value(Interpretation i){
 		boolean value = pre.value(i) || post.value(i);
 		return value;
+	}
+
+	@Override
+	public Formule toNormalForm() {
+		return or(pre.toNormalForm(), post.toNormalForm());
 	}
 }
