@@ -23,12 +23,27 @@ public class Equi extends Formule{
 	}
 
 	public boolean value(Interpretation i){
-		boolean value = pre.value(i) == post.value(i);
-		return value;
+		return pre.value(i) == post.value(i);
 	}
 
 	@Override
 	public Formule toNormalForm(){
-		return And.and(Or.or(Not.not(pre), post), Or.or(Not.not(post), pre)).toNormalForm();
+		return And.and(Or.or(Not.not(pre), post),
+					Or.or(Not.not(post), pre)).toNormalForm();
+	}
+
+	@Override
+	public Formule toCNF(){
+		return this.toNormalForm().toCNF();
+	}
+
+	@Override
+	public Formule toDNF(){
+		return this.toNormalForm().toDNF();
+	}
+
+	@Override
+	public String toHTML(){
+		return "(" + pre.toHTML() + " &leftrightarrow; " + post.toHTML() + ")";
 	}
 }

@@ -21,12 +21,26 @@ public class Var extends Formule{
 	}
 
 	public boolean value(Interpretation i){
-		boolean value = i.getValues().get(name);
-		return value;
+		return i.getValues().get(name);
 	}
 
 	@Override
 	public Formule toNormalForm() {
 		return this;
+	}
+
+	@Override
+	public Formule toCNF(){
+		return this;
+	}
+
+	@Override
+	public Formule toDNF(){
+		return this;
+	}
+
+	@Override
+	public String toHTML(){
+		return name;
 	}
 }

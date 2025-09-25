@@ -24,12 +24,26 @@ public class Impl extends Formule{
 
 	public boolean value(Interpretation i){
 		//a->b <=> !a|b
-		boolean value = !pre.value(i) || post.value(i);
-		return value;
+		return !pre.value(i) || post.value(i);
 	}
 
 	@Override
 	public Formule toNormalForm(){
 		return Or.or(Not.not(pre), post).toNormalForm();
+	}
+
+	@Override
+	public Formule toCNF(){
+		return this.toNormalForm().toCNF();
+	}
+
+	@Override
+	public Formule toDNF(){
+		return this.toNormalForm().toDNF();
+	}
+
+	@Override
+	public String toHTML(){
+		return "(" + pre.toHTML() + " &rightarrow; " + post.toHTML() + ")";
 	}
 }

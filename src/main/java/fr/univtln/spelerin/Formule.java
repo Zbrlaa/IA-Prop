@@ -5,11 +5,9 @@ import java.util.Map;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public abstract class Formule{
 	protected String name;
@@ -26,4 +24,8 @@ public abstract class Formule{
 	}
 
 	public abstract Formule toNormalForm();
+	public abstract Formule toCNF();
+	public abstract Formule toDNF();
+
+	public abstract String toHTML();
 }

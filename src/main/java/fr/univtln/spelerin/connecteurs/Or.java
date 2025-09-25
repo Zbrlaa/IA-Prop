@@ -23,12 +23,41 @@ public class Or extends Formule{
 	}
 
 	public boolean value(Interpretation i){
-		boolean value = pre.value(i) || post.value(i);
-		return value;
+		return pre.value(i) || post.value(i);
 	}
 
 	@Override
-	public Formule toNormalForm() {
+	public Formule toNormalForm(){
 		return or(pre.toNormalForm(), post.toNormalForm());
+	}
+
+	@Override
+	public Formule toCNF(){
+		//Maxi redondance car j'appelle toCNF partout mais au moins on loupe rien
+		Formule preNF = pre.toNormalForm().toCNF();
+		Formule postNF = post.toNormalForm().toCNF();
+
+		if(preNF.getName().equals("and")){
+			return And.and(Or.or(postNF, preNF.getPre()).toCNF(),
+							Or.or(postNF, preNF.getPost()).toCNF()).toCNF();
+		}
+		else if(postNF.getName().equals("and")){
+			return And.and(Or.or(preNF, postNF.getPre()).toCNF(),
+							Or.or(preNF, postNF.getPost()).toCNF()).toCNF();
+		}
+		return or(preNF.toCNF(), postNF.toCNF());
+	}
+
+	@Override
+	public Formule toDNF(){
+		Formule preNF = pre.toNormalForm();
+		Formule postNF = post.toNormalForm();
+
+		return or(preNF.toDNF(), postNF.toDNF());
+	}
+
+	@Override
+	public String toHTML(){
+		return "(" + pre.toHTML() + " &vee; " + post.toHTML() + ")";
 	}
 }

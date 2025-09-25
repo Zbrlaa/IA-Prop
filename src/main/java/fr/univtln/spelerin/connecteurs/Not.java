@@ -28,9 +28,10 @@ public class Not extends Formule{
 
 	@Override
 	public Formule toNormalForm(){
-		Formule postNF = post.toNormalForm();
+		Formule postNF = post.toNormalForm(); //Pour transformer les équi et impl : moins de if à gérer
 
-		if (postNF.getName().equals("not")){ //!!a <=> a
+		//Mieux d'utiliser instanceof je pense mais au moins j'utilise l'attribut name, sinon il serait utilisé que par var
+		if(postNF.getName().equals("not")){ //!!a <=> a
 			return postNF.getPost().toNormalForm();
 		}
 		else if(postNF.getName().equals("and")){ //!(a&b) <=> !a|!b
@@ -39,6 +40,23 @@ public class Not extends Formule{
 		else if(postNF.getName().equals("or")){ //!(a|b) <=> !a&!b
 			return And.and(not(postNF.getPre()),not(postNF.getPost())).toNormalForm();
 		}
-		return not(postNF);
+		return not(postNF); //Cas restant où postNF est une var
+	}
+
+	@Override
+	public Formule toCNF(){
+		Formule postNF = post.toNormalForm();
+		return Not.not(postNF.toCNF());
+	}
+
+	@Override
+	public Formule toDNF(){
+		Formule postNF = post.toNormalForm();
+		return Not.not(postNF.toDNF());
+	}
+
+	@Override
+	public String toHTML(){
+		return "&not;" + post.toHTML();
 	}
 }
