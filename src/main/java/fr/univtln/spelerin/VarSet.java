@@ -27,14 +27,17 @@ public class VarSet{
 
 	
 	public List<Interpretation> getInterpretations(){
+		//Comme on sait qu'il y a 2**n interprétations possible pour n vars
+		//Le but est de récuperer la représentation binaire de tout ces nombres en affectant 0->false, 1->true 
 		List<String> varList = new ArrayList<>(vars);
 		int size = varList.size();
-		int nb = 1 << size;
+		int nb = 1 << size; //=2**nb
 
 		List<Interpretation> interpretations = new ArrayList<>();
 		for(int i=0; i<nb; i++){
 			Map<String, Boolean> map = new HashMap<>();
 			for(int j=0; j<size; j++){
+				//Récupere le bit en position j à partir de la droite
 				int b = i>>j&1;
 				map.put(varList.get(j), b==1);
 			}
