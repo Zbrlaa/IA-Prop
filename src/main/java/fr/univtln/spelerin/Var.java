@@ -2,7 +2,6 @@ package fr.univtln.spelerin;
 import java.util.Set;
 
 import lombok.Getter;
-import lombok.val;
 
 
 @Getter

@@ -29,8 +29,6 @@ public class Equi extends Formule{
 
 	@Override
 	public Formule toNormalForm(){
-		Formule preNF = pre.toNormalForm();
-		Formule postNF = post.toNormalForm();
-		return And.and(Or.or(Not.not(preNF), postNF), Or.or(Not.not(postNF), preNF)).toNormalForm();
+		return And.and(Or.or(Not.not(pre), post), Or.or(Not.not(post), pre)).toNormalForm();
 	}
 }

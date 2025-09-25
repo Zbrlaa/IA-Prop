@@ -23,7 +23,7 @@ public class Impl extends Formule{
 	}
 
 	public boolean value(Interpretation i){
-		//a -> b <=> !a v b
+		//a->b <=> !a|b
 		boolean value = !pre.value(i) || post.value(i);
 		return value;
 	}

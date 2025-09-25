@@ -25,12 +25,6 @@ public class App {
 
 		System.out.println("All F(I): " + f.values());
 		
-		System.out.println(f.toNormalForm());
-
-		// Formule f2 = Not.not(Or.or(Var.var("a"),Var.var("b")));
-		// System.out.println(f2.toNormalForm());
-
-		// Formule f3 = (Not.not(Not.not(Var.var("a"))));
-		// System.out.println(f3.toNormalForm());
+		System.out.println("Normal forme: " + f.toNormalForm());
 	}
 }

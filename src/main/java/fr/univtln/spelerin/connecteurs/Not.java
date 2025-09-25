@@ -29,15 +29,16 @@ public class Not extends Formule{
 	@Override
 	public Formule toNormalForm(){
 		Formule postNF = post.toNormalForm();
-		if (postNF.getName().equals("not")){
+
+		if (postNF.getName().equals("not")){ //!!a <=> a
 			return postNF.getPost().toNormalForm();
 		}
-		else if(postNF.getName().equals("and")){
-			return Or.or(not(postNF.getPre()),not(postNF.getPost()));
+		else if(postNF.getName().equals("and")){ //!(a&b) <=> !a|!b
+			return Or.or(not(postNF.getPre()), not(postNF.getPost())).toNormalForm();
 		}
-		else if(postNF.getName().equals("or")){
-			return And.and(not(postNF.getPre()),not(postNF.getPost()));
+		else if(postNF.getName().equals("or")){ //!(a|b) <=> !a&!b
+			return And.and(not(postNF.getPre()),not(postNF.getPost())).toNormalForm();
 		}
-		return not(postNF.toNormalForm());
+		return not(postNF);
 	}
 }
