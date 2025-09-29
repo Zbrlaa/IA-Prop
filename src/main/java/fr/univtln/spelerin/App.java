@@ -1,8 +1,8 @@
 package fr.univtln.spelerin;
 
-import fr.univtln.spelerin.connecteurs.Not;
 import java.util.Map;
 
+import fr.univtln.spelerin.connecteurs.Not;
 import fr.univtln.spelerin.connecteurs.And;
 import fr.univtln.spelerin.connecteurs.Or;
 import fr.univtln.spelerin.connecteurs.Impl;
@@ -11,6 +11,12 @@ import fr.univtln.spelerin.connecteurs.Equi;
 
 public class App {
 	public static void main(String[] args) {
+		//tp1();
+	
+		tp2();
+	}
+
+	private static void tp1(){
 		Formule f = Equi.equi(And.and(Or.or(Not.not(Var.var("a")),
 											Var.var("b")),
 									Impl.impl(Var.var("c"),
@@ -48,5 +54,15 @@ public class App {
 		//NormalForm, CNF et DNF correctes
 		//Pas sous forme minimale (présence de tautologies et doublons) mais pas requis et demanderait trop de temps
 		//Affichage HTML : je pense que c'est bon, pas d'exemple avec correction pour vérifier
+	}
+
+	private static void tp2(){
+		Formule fp = And.and(Impl.impl(Var.var("p"), Var.var("r")),
+							And.and(Equi.equi(Var.var("q"), Var.var("s")),
+									And.and(Equi.equi(Var.var("r"), Var.var("q")),
+											Var.var("p"))));
+		Proof p = Proof.proof(fp, Var.var("s"));
+		System.out.println(p);
+		p.valueByTab();
 	}
 }

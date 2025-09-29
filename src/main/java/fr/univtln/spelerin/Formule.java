@@ -28,4 +28,6 @@ public abstract class Formule{
 	public abstract Formule toDNF();
 
 	public abstract String toHTML();
+
+	// public abstract Node toNode();
 }
