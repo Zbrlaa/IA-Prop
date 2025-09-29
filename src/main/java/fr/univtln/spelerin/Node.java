@@ -3,7 +3,6 @@ package fr.univtln.spelerin;
 import java.util.HashSet;
 import java.util.Set;
 
-import fr.univtln.spelerin.connecteurs.Or;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +18,7 @@ public class Node{
 	private Node enfants2;
 	private boolean isClosed = false;
 
-	public Node(Formule formule){
+	private Node(Formule formule){
 		formules.add(formule);
 		allFormules.add(formule);
 	}
@@ -34,7 +33,7 @@ public class Node{
 		return formules + " : [" + enfants1 + ", " + enfants2 + "]";
 	}
 
-	public void verify(){
+	public void verifyIfClosed(){
 		allFormules.forEach(f1 -> {
 			if(f1.getName().equals("not")){
 				allFormules.forEach(f2 -> {
@@ -51,9 +50,5 @@ public class Node{
 				return false;
 		}
 		return true;
-	}
-
-	public void applyRules(){
-		
 	}
 }

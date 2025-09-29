@@ -1,7 +1,6 @@
-# IA-Prop-TP1
-IA Propositionnelle : TP1 - Gestionnaire de formule
-
-Sujet : http://web.seinturier.fr/teaching/ai/ias-log-formulas
+# IA Propositionnelle
+TP1 - Gestionnaire de formule : http://web.seinturier.fr/teaching/ai/ias-log-formulas
+TP2 - Raisonnement : http://web.seinturier.fr/teaching/ai/ias-pl-reasoning
 
 Voir conclusion dans App.java
 

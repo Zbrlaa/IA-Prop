@@ -1,5 +1,7 @@
 package fr.univtln.spelerin;
 
+import java.util.Set;
+
 import fr.univtln.spelerin.connecteurs.And;
 import fr.univtln.spelerin.connecteurs.Not;
 import lombok.AllArgsConstructor;
@@ -8,12 +10,12 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor()
-public class Proof{
+public class Deduction{
 	private Formule pre;
 	private Formule post;
 	
-	public static Proof proof(Formule pre, Formule post){
-		return new Proof(pre, post);
+	public static Deduction deduction(Formule pre, Formule post){
+		return new Deduction(pre, post);
 	}
 
 	@Override
@@ -26,10 +28,18 @@ public class Proof{
 	}
 
 	//Méthode Tableaux
-	public boolean valueByTab(){
+	public boolean isProved(){
 		Formule f = this.toFormule();
 		Node root = Node.ofFormule(f);
-		System.out.println(root);
+		
+		Set<Node> nodesToTreat = Set.of(root);
+		boolean verif = true;
+		while(verif){
+			for(Node n : nodesToTreat){
+				
+			}
+		}
+
 		return false;
 	}
 }

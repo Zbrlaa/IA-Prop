@@ -61,8 +61,8 @@ public class App {
 							And.and(Equi.equi(Var.var("q"), Var.var("s")),
 									And.and(Equi.equi(Var.var("r"), Var.var("q")),
 											Var.var("p"))));
-		Proof p = Proof.proof(fp, Var.var("s"));
+		Deduction p = Deduction.deduction(fp, Var.var("s"));
 		System.out.println(p);
-		p.valueByTab();
+		p.isProved();
 	}
 }
