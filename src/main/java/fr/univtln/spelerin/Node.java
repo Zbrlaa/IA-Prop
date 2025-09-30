@@ -14,23 +14,22 @@ import lombok.Setter;
 public class Node{
 	private Set<Formule> formules = new HashSet<>();
 	private Set<Formule> allFormules = new HashSet<>(); //pour vérif fermeture
-	private Node enfants1;
-	private Node enfants2;
+	private Set<Node> childs;
 	private boolean isClosed = false;
 
-	private Node(Formule formule){
-		formules.add(formule);
-		allFormules.add(formule);
+	private Node(Set<Formule> formules){
+		this.formules.addAll(formules);
+		allFormules.addAll(formules);
 	}
 
-	public static Node ofFormule(Formule formule){
-		return new Node(formule);
+	public static Node ofFormules(Set<Formule> formules){
+		return new Node(formules);
 	}
 
 
 	@Override
 	public String toString() {
-		return formules + " : [" + enfants1 + ", " + enfants2 + "]";
+		return formules + " : " + childs;
 	}
 
 	public void verifyIfClosed(){

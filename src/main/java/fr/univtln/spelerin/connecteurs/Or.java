@@ -1,7 +1,10 @@
 package fr.univtln.spelerin.connecteurs;
 
+import java.util.Set;
+
 import fr.univtln.spelerin.Formule;
 import fr.univtln.spelerin.Interpretation;
+import fr.univtln.spelerin.Node;
 import fr.univtln.spelerin.VarSet;
 import lombok.Getter;
 
@@ -59,5 +62,12 @@ public class Or extends Formule{
 	@Override
 	public String toHTML(){
 		return "(" + pre.toHTML() + " &vee; " + post.toHTML() + ")";
+	}
+
+	@Override
+	public Set<Node> toChildNodes(){
+		Node c1 = Node.ofFormules(Set.of(pre));
+		Node c2 = Node.ofFormules(Set.of(post));
+		return Set.of(c1,c2);
 	}
 }

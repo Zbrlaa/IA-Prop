@@ -1,4 +1,5 @@
 package fr.univtln.spelerin;
+import java.util.Collections;
 import java.util.Set;
 
 import lombok.Getter;
@@ -42,5 +43,10 @@ public class Var extends Formule{
 	@Override
 	public String toHTML(){
 		return name;
+	}
+
+	@Override
+	public Set<Node> toChildNodes(){
+		return Collections.emptySet();
 	}
 }

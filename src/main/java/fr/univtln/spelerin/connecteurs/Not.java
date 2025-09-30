@@ -1,7 +1,11 @@
 package fr.univtln.spelerin.connecteurs;
 
+import java.util.Collections;
+import java.util.Set;
+
 import fr.univtln.spelerin.Formule;
 import fr.univtln.spelerin.Interpretation;
+import fr.univtln.spelerin.Node;
 import fr.univtln.spelerin.VarSet;
 import lombok.Getter;
 
@@ -58,5 +62,32 @@ public class Not extends Formule{
 	@Override
 	public String toHTML(){
 		return "&not;" + post.toHTML();
+	}
+
+	@Override
+	public Set<Node> toChildNodes(){
+		if(post.getName().equals("not")){
+			Node c1 = Node.ofFormules(Set.of(post.getPost()));
+			return Set.of(c1);
+		}
+		else if(post.getName().equals("and")){
+			Node c1 = Node.ofFormules(Set.of(Not.not(post.getPre())));
+			Node c2 = Node.ofFormules(Set.of(Not.not(post.getPost())));
+			return Set.of(c1,c2);
+		}
+		else if(post.getName().equals("or")){
+			Node c1 = Node.ofFormules(Set.of(Not.not(post.getPre()), Not.not(post.getPost())));
+			return Set.of(c1);
+		}
+		else if(post.getName().equals("equi")){
+			Node c1 = Node.ofFormules(Set.of(post.getPre() ,Not.not(post.getPost())));
+			Node c2 = Node.ofFormules(Set.of(Not.not(post.getPre()), post.getPost()));
+			return Set.of(c1,c2);
+		}
+		else if(post.getName().equals("impl")){
+			Node c1 = Node.ofFormules(Set.of(post.getPre(), Not.not(post.getPost())));
+			return Set.of(c1);
+		}
+		return Collections.emptySet();
 	}
 }

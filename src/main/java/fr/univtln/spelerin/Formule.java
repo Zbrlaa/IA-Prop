@@ -2,6 +2,8 @@ package fr.univtln.spelerin;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,5 +31,5 @@ public abstract class Formule{
 
 	public abstract String toHTML();
 
-	// public abstract Node toNode();
+	public abstract Set<Node> toChildNodes();
 }
