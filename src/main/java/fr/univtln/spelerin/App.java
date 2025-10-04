@@ -1,6 +1,7 @@
 package fr.univtln.spelerin;
 
 import java.util.Map;
+import java.util.Set;
 
 import fr.univtln.spelerin.connecteurs.Not;
 import fr.univtln.spelerin.connecteurs.And;
@@ -59,10 +60,15 @@ public class App {
 	private static void tp2(){
 		Formule fp = And.and(Impl.impl(Var.var("p"), Var.var("r")),
 							And.and(Equi.equi(Var.var("q"), Var.var("s")),
-									And.and(Equi.equi(Var.var("r"), Var.var("q")),
+									And.and(Equi.equi(Var.var("r"), Var.var("p")),
 											Var.var("p"))));
-		Deduction p = Deduction.deduction(fp, Var.var("s"));
+		Deduction p = Deduction.deduction(Set.of(fp), Var.var("s"));
 		System.out.println(p);
-		p.isProved();
+		System.out.println(p.isProved());
+
+		Formule fp2 = And.and(Var.var("a"), Var.var("b"));
+		Deduction p2 = Deduction.deduction(Set.of(fp2), Var.var("c"));
+		System.out.println(p2);
+		System.out.println(p2.isProved());
 	}
 }

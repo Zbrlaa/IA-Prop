@@ -1,5 +1,10 @@
 package fr.univtln.spelerin;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Set;
 
 import fr.univtln.spelerin.connecteurs.And;
@@ -11,10 +16,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor()
 public class Deduction{
-	private Formule pre;
+	private Set<Formule> pre;
 	private Formule post;
 	
-	public static Deduction deduction(Formule pre, Formule post){
+	public static Deduction deduction(Set<Formule> pre, Formule post){
 		return new Deduction(pre, post);
 	}
 
@@ -23,44 +28,70 @@ public class Deduction{
 		return pre + " ⊢ " + post;
 	}
 
-	public Formule toFormule(){
-		return And.and(pre, Not.not(post));
+	public Set<Formule> toFormules(){
+		Set<Formule> formules = new HashSet<>(pre);
+		formules.add(Not.not(post));
+
+		return formules;
 	}
 
 	//Méthode Tableaux
 	public boolean isProved(){
-		Formule f = this.toFormule();
-		Node root = Node.ofFormules(Set.of(f));
+		//Ca peut etre optimisé et fait plus joliment mais ça m'a déjà pris énormément de temps & j'ai pas envie de tout cassé
 
-		Set<Node> nodesToAffect = Set.of(root); //Noeuds qu'on étend (dont on affecte les enfants)
-		Set<Node> nodesToTreat = Set.of(root); //Noeuds qu'on traite (dont on regarde la formule) ! Faudrait un ordre : File"
-		boolean toDo = true; //Pour gerer la terminaison
-		boolean result; //Pour le resultat de l'algo
-		//Tant qu'on a des noeufs à traiter ou qu'une branche reste ouverte
+		Set<Formule> formules = this.toFormules();
+		Node root = Node.ofFormules(formules);
+
+		Set<Node> nodesToExtend; //Noeuds qu'on étend (auquel on affecte les enfants)
+		Queue<Node> nodesToTreat = new LinkedList<>(List.of(root)); //Noeuds qu'on traite (dont on regarde la formule), List pour avoir un ordre
+
+		//Tant qu'on a des noeufs à traiter
 		while(!nodesToTreat.isEmpty()){
-			//Faire des verifs là :
+			Node currentNode = nodesToTreat.poll();
+			// System.out.println("Traitement du noeud courant : " + currentNode);
+			nodesToExtend = currentNode.getDeeperChilds();
 
-			//Pour tout les noeuds à traiter
-			for(Node nTT : nodesToTreat){
-				//Pour toutes les formules du noeud
-				for(Formule form : nTT.getFormules()){
-					//Creer methode sur formule qui renvoies les noeuds enfants que ça crée : Set<Node> childs = f.toChildNodes()
-					//Pour tout les noeuds toAffect
-					//if(!childs.isEmpty())
-						for(Node nTA : nodesToAffect){
-							//On étend le noeud na.extend(childs) : ajoute les enfants, étend allFormules et change formules
-							//Verif des enfants :
-								//Si noeud fini et pas close -> return false
-								//Si noeud fermé -> on l'oublis juste
-								//Sinon, il devient a affecté et traité
-							
-							//Important : voir si on étend bien les branches où on est et pas les voisines !!
-						}
+			//Pour toutes les formules du noeud
+			for(Formule nTTForms : currentNode.getFormules()){
+				// System.out.println("Noeuds à étendre : " + nodesToExtend);
+				// System.out.println("Traitement formule : " + nTTForms);
+
+				Set<Node> nextToExpend = new HashSet<>();
 				
+				//Recuperer les noeuds enfants de la formule
+				Set<Node> childs = nTTForms.toChildNodes();
+				// System.out.println("Noeuds enfants : " + childs);
+
+				if(!childs.isEmpty()){
+					for(Node nTE : nodesToExtend){
+						// System.out.println("Extension de : " + nTE);
+						//On étend le noeud : ajoute les enfants
+						nTE.extend(childs);
+						
+						for(Node c : nTE.getChilds()){
+							// System.out.println("Traitement nouvel enfant : " + c);
+							//On l'ajoute aux noeuds à traiter
+							nodesToTreat.add(c);
+
+							c.verifyIfClosed();
+							if(!c.isClosed()){
+								// System.out.println("Ajout à nextToExpend");
+								nextToExpend.add(c);
+							}
+						}
+					}
 				}
+				if(!nextToExpend.isEmpty())
+					nodesToExtend = nextToExpend;
 			}
-			//plus de noeuds à traiter : toDo false
 		}
-		return false;
+
+		// System.out.println("Tout les noeuds ont été traités");
+		for(Node finBranche : root.getDeeperChilds()){
+			finBranche.verifyIfClosed();
+			if(!finBranche.isClosed())
+				return false; //Au moins une branche est ouverte
+		}
+		return true; //Toutes les branches sont fermées
 	}
 }
