@@ -70,5 +70,7 @@ public class App {
 		Deduction p2 = Deduction.deduction(Set.of(fp2), Var.var("c"));
 		System.out.println(p2);
 		System.out.println(p2.isProved());
+
+		//Beaucoup trop long de faire le parser LaTex sans aide expérieure
 	}
 }

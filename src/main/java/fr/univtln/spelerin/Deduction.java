@@ -1,13 +1,11 @@
 package fr.univtln.spelerin;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
-import fr.univtln.spelerin.connecteurs.And;
 import fr.univtln.spelerin.connecteurs.Not;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -43,7 +41,7 @@ public class Deduction{
 		Node root = Node.ofFormules(formules);
 
 		Set<Node> nodesToExtend; //Noeuds qu'on étend (auquel on affecte les enfants)
-		Queue<Node> nodesToTreat = new LinkedList<>(List.of(root)); //Noeuds qu'on traite (dont on regarde la formule), List pour avoir un ordre
+		Queue<Node> nodesToTreat = new LinkedList<>(List.of(root)); //Noeuds qu'on traite (dont on regarde la formule), file pour avoir un ordre
 
 		//Tant qu'on a des noeufs à traiter
 		while(!nodesToTreat.isEmpty()){
@@ -81,6 +79,7 @@ public class Deduction{
 						}
 					}
 				}
+				//Les prochains noeuds à étendre sont ceux qui ont été créés ou le noeuds lui meme si la formule était atomique
 				if(!nextToExpend.isEmpty())
 					nodesToExtend = nextToExpend;
 			}
